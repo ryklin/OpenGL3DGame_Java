@@ -1,6 +1,5 @@
-# OpenGL3DGame
- This code is based entirely on ThinMatrix's Beginners OpenGL 3D Game Tutorials .
-
+# Game Engine written entirely using Java, OpenGL, and GLSL.
+<b>This code is based entirely on ThinMatrix's Beginners OpenGL 3D Game Tutorials</b>
 This tutorial focuses on the new Opengl 3.0 programmable pipeline, with emphasis on shaders!
 
 To view the tutorial video series, visit the following link.
