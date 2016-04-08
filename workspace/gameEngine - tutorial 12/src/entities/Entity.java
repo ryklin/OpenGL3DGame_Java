@@ -22,12 +22,13 @@ public class Entity {
 		this.scale = scale;
 	}
 
+	// I added this function, it does not exist in the tutorial
 	public void move(){
 		if (Keyboard.isKeyDown(Keyboard.KEY_UP)){
-			setRotZ(rotZ-2.2f);
+			setRotZ(rotZ+2.2f);
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)){
-			setRotZ(rotZ+2.2f);
+			setRotZ(rotZ-2.2f);
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
 			setRotY(rotY-2.2f);

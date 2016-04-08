@@ -39,7 +39,7 @@ public class MainGameLoop {
 		while(!Display.isCloseRequested()) {
 			entity.increaseRotation(0, 1, 0);
 			camera.move();
-			entity.move();
+			entity.move();// I added this function, it does not exist in the tutorial
 			renderer.prepare();
 			//game logic
 			shader.start();
