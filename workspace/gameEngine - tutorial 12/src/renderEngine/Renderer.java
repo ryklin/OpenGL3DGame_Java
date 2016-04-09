@@ -42,8 +42,6 @@ public class Renderer {
 		GL20.glEnableVertexAttribArray(0); // position
 		GL20.glEnableVertexAttribArray(1); // textureCoordinates
 		GL20.glEnableVertexAttribArray(2); // normal
-		GL20.glEnableVertexAttribArray(3); // shineDamper
-		GL20.glEnableVertexAttribArray(4); // reflectivity
 		Matrix4f transformationMatrix = Maths.createTransformationMatrix(entity.getPosition(), entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());
 		shader.loadTransformationMatrix(transformationMatrix);
 		ModelTexture texture = textureModel.getTexture();
@@ -54,8 +52,6 @@ public class Renderer {
 		GL20.glDisableVertexAttribArray(0);
 		GL20.glDisableVertexAttribArray(1);
 		GL20.glDisableVertexAttribArray(2);
-		GL20.glDisableVertexAttribArray(3);
-		GL20.glDisableVertexAttribArray(4);
 		GL30.glBindVertexArray(0);
 	}
 	
