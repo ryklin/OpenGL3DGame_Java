@@ -1,0 +1,37 @@
+#version 400 core
+
+in vec3 position;
+in vec2 textureCoordinates;
+in vec3 normal;
+
+out vec2 pass_textureCoordinates;
+out vec3 surfaceNormal;
+out vec3 toLightVector;
+out vec3 toCameraVector;
+out float visibility;
+
+uniform mat4 transformationMatrix;	// the entity's position relative to the everything below
+uniform mat4 projectionMatrix;		// where the default location of everything is
+uniform mat4 viewMatrix;			// camera's perspective
+uniform vec3 lightPosition;			// location of the light source (only one source of light so far)
+
+const float density = 0.0035;
+const float gradient = 5.0;
+
+void main(void){
+
+	vec4 worldPosition = transformationMatrix * vec4(position,1.0); // position is the position of the current vertex
+	vec4 positionRelativeToCam = viewMatrix * worldPosition;
+	
+	gl_Position = projectionMatrix * positionRelativeToCam;  	// NOTE: viewMatrix must go in between the projectionMatrix and transformationMatrix
+	pass_textureCoordinates = textureCoordinates;
+	surfaceNormal = (transformationMatrix * vec4(normal, 0.0)).xyz; //(swizzle it) convert from vec4 back to vec3
+	
+	toLightVector = lightPosition - worldPosition.xyz;
+	toCameraVector = (inverse(viewMatrix) * vec4(0.0,0.0,0.0,1.0)).xyz - worldPosition.xyz;
+	
+	float distance = length(positionRelativeToCam.xyz);
+	visibility = exp(-pow((distance*density), gradient));
+	visibility = clamp(visibility, 0.0, 1.0);
+	
+}
