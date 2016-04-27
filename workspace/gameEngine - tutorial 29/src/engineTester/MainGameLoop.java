@@ -108,7 +108,9 @@ public class MainGameLoop {
 
 		}
 
-		lights.add(new Light(new Vector3f(0,1000,-7000), new Vector3f(0.4f,0.4f,0.4f))); // main sun light
+		Light sun = new Light(new Vector3f(400,1000,-400), new Vector3f(0.1f,0.1f,0.1f));
+		
+		lights.add(sun); // main sun light
 
 		x = 400;
 		z = -490;
@@ -141,11 +143,21 @@ public class MainGameLoop {
 		Camera camera = new Camera(player);
 		
 		MousePicker picker = new MousePicker(camera, renderer.getProjectionMatrix(), terrain);
+		float time = 0;
+		float sunIntensity = 0;
+		float delay = 100;
 		
 		while(!Display.isCloseRequested()) {
 			camera.move();
 			player.move(terrain);
 			picker.update();
+
+			time += DisplayManager.getFrameTimeSeconds() * 1000;
+			
+			sunIntensity = (float) ((float) (Math.sin(Math.toRadians(time/delay))+1.0)/2.0);
+			sun.setColour(new Vector3f(sunIntensity, sunIntensity, sunIntensity));
+
+
 			Vector3f terrainPoint = picker.getCurrentTerrainPoint();
 			if (terrainPoint != null){
 				lampEntity.setPosition(terrainPoint);;
