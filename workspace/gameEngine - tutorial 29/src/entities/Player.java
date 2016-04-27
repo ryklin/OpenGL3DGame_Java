@@ -41,8 +41,6 @@ public class Player extends Entity {
 			isAirborn = false;
 		}
 		
-		//System.out.println(getPosition().x + "," + getPosition().y + "," + getPosition().z);  
-
 		if (getPosition().x  < 0){
 			upwardsSpeed = 0;
 			getPosition().x = 0;
@@ -60,6 +58,7 @@ public class Player extends Entity {
 			upwardsSpeed = 0;
 			getPosition().z = -800;
 		}
+		//System.out.println("x:" + getPosition().x + ",y:" + getPosition().y + ",z:" + getPosition().z);  
 		
 	}
 	

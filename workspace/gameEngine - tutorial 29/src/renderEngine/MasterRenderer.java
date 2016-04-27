@@ -8,10 +8,13 @@ import java.util.Map;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector2f;
 
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
+import guis.GuiRenderer;
+import guis.GuiTexture;
 import models.TexturedModel;
 import shaders.StaticShader;
 import shaders.TerrainShader;
@@ -38,8 +41,10 @@ public class MasterRenderer {
 	
 	private Map<TexturedModel, List<Entity>> entities = new HashMap<TexturedModel, List<Entity>>();
 	private List<Terrain> terrains = new ArrayList<Terrain>();
+	List<GuiTexture> guis = new ArrayList<GuiTexture>();
 	
 	private SkyboxRenderer skyboxRenderer;
+	private GuiRenderer guiRenderer;
 	
 	public MasterRenderer(Loader loader)
 	{
@@ -48,6 +53,15 @@ public class MasterRenderer {
 		renderer = new EntityRenderer(shader, projectionMatrix);
 		terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
 		skyboxRenderer = new SkyboxRenderer(loader, projectionMatrix);
+		guiRenderer = new GuiRenderer(loader);
+
+		GuiTexture gui = new GuiTexture(loader.loadTexture("socuwan"), new Vector2f(0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
+		GuiTexture gui2 = new GuiTexture(loader.loadTexture("thinmatrix"), new Vector2f(0.30f, 0.58f), new Vector2f(0.4f, 0.4f));
+		GuiTexture gui3 = new GuiTexture(loader.loadTexture("health"), new Vector2f(-0.74f, 0.925f), new Vector2f(0.25f, 0.25f));
+		guis.add(gui);
+		guis.add(gui2);
+		guis.add(gui3);
+
 	}
 	
 	public Matrix4f getProjectionMatrix(){
@@ -80,6 +94,7 @@ public class MasterRenderer {
 		terrainRenderer.render(terrains);
 		terrainShader.stop();
 		skyboxRenderer.render(camera, RED, GREEN, BLUE);
+		guiRenderer.render(guis);
 		terrains.clear();
 		entities.clear();
 	}
@@ -103,6 +118,7 @@ public class MasterRenderer {
 	public void cleanUp(){
 		shader.cleanUp();
 		terrainShader.cleanUp();
+		guiRenderer.cleanUp();
 	}
 	
 	public void prepare() {
