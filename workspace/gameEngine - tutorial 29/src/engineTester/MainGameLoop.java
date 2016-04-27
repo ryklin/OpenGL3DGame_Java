@@ -113,27 +113,30 @@ public class MainGameLoop {
 		lights.add(sun); // main sun light
 
 		x = 400;
-		z = -490;
+		z = -530;
 		y = terrain.getHeightOfTerrain(x, z);
 		float lampLight_yOffset = 15; // this is approximately the height of the lamp post which we add to the height of the light
 		
 		entities.add(new Entity(lamp, new Vector3f(x, y, z), 0, 0, 0, 1));
-		lights.add(new Light(new Vector3f(x, y+lampLight_yOffset, z), new Vector3f(2, 0, 0), new Vector3f(1.0f, 0.01f, 0.002f)));
+		lights.add(new Light(new Vector3f(x, y+lampLight_yOffset, z), new Vector3f(0, 0, 2), new Vector3f(1.0f, 0.01f, 0.002f)));
 
 		x = +490;
 		z = -400-60;
 		y = terrain.getHeightOfTerrain(x, z);
-		entities.add(new Entity(lamp, new Vector3f(x, y, z), 0, 0, 0, 1));
-		lights.add(new Light(new Vector3f(x, y+lampLight_yOffset, z), new Vector3f(2, 2, 0), new Vector3f(1.0f, 0.01f, 0.002f)));
+		
+		Entity lampEntity1 = new Entity(lamp, new Vector3f(x, y, z), 0, 0, 0, 1); 
+		entities.add(lampEntity1);
+		Light light1 = new Light(new Vector3f(x, y+lampLight_yOffset, z), new Vector3f(2, 2, 2), new Vector3f(1.0f, 0.01f, 0.002f)); 
+		lights.add(light1);
 
 		x = +490;
 		z = -350;
 		y = terrain.getHeightOfTerrain(x, z);
 		
-		Entity lampEntity = new Entity(lamp, new Vector3f(x, y, z), 0, 0, 0, 1); 
-		entities.add(lampEntity);
-		Light light = new Light(new Vector3f(x, y+lampLight_yOffset, z), new Vector3f(0, 2, 0), new Vector3f(1.0f, 0.01f, 0.002f)); 
-		lights.add(light);
+		Entity lampEntity2 = new Entity(lamp, new Vector3f(x, y, z), 0, 0, 0, 1); 
+		entities.add(lampEntity2);
+		Light light2 = new Light(new Vector3f(x, y+lampLight_yOffset, z), new Vector3f(2,0,0), new Vector3f(1.0f, 0.01f, 0.002f)); 
+		lights.add(light2);
 
 	
 		TexturedModel avatar = new TexturedModel(OBJLoader.loadObjModel("player",  loader), new ModelTexture(loader.loadTexture("playerTexture")));
@@ -160,10 +163,10 @@ public class MainGameLoop {
 			sun.setColour(new Vector3f(sunIntensity, sunIntensity, sunIntensity));
 
 
-			Vector3f terrainPoint = picker.getCurrentTerrainPoint();
-			if (terrainPoint != null){
-				lampEntity.setPosition(terrainPoint);;
-				light.setPosition(new Vector3f(terrainPoint.x, terrainPoint.y+lampLight_yOffset, terrainPoint.z));
+			Vector3f terrainPointChosen = picker.getCurrentTerrainPoint();
+			if (terrainPointChosen != null){
+				lampEntity1.setPosition(terrainPointChosen);;
+				light1.setPosition(new Vector3f(terrainPointChosen.x, terrainPointChosen.y+lampLight_yOffset, terrainPointChosen.z));
 			}
 //			System.out.println(picker.getCurrentRay());
 			renderer.processEntity(player);
