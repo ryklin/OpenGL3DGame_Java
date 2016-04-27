@@ -135,17 +135,19 @@ public class MainGameLoop {
 		Light light = new Light(new Vector3f(x, y+lampLight_yOffset, z), new Vector3f(0, 2, 0), new Vector3f(1.0f, 0.01f, 0.002f)); 
 		lights.add(light);
 
-		MasterRenderer renderer = new MasterRenderer(loader);
 	
 		TexturedModel avatar = new TexturedModel(OBJLoader.loadObjModel("player",  loader), new ModelTexture(loader.loadTexture("playerTexture")));
 		
 		Player player = new Player(avatar, new Vector3f(400,0,-400), 0,180,0,1);
 		Camera camera = new Camera(player);
 		
-		MousePicker picker = new MousePicker(camera, renderer.getProjectionMatrix(), terrain);
 		float time = 0;
 		float sunIntensity = 0;
-		float delay = 100;
+		float timeDelay = 100; // make sure the delay is the same as in the skybox renderer.
+
+		MasterRenderer renderer = new MasterRenderer(loader, timeDelay);
+		MousePicker picker = new MousePicker(camera, renderer.getProjectionMatrix(), terrain);
+
 		
 		while(!Display.isCloseRequested()) {
 			camera.move();
@@ -154,7 +156,7 @@ public class MainGameLoop {
 
 			time += DisplayManager.getFrameTimeSeconds() * 1000;
 			
-			sunIntensity = (float) ((float) (Math.sin(Math.toRadians(time/delay))+1.0)/2.0);
+			sunIntensity = (float) ((float) (Math.sin(Math.toRadians(time/timeDelay))+1.0)/2.0);
 			sun.setColour(new Vector3f(sunIntensity, sunIntensity, sunIntensity));
 
 

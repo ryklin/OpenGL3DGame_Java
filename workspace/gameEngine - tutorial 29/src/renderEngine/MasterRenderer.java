@@ -46,13 +46,13 @@ public class MasterRenderer {
 	private SkyboxRenderer skyboxRenderer;
 	private GuiRenderer guiRenderer;
 	
-	public MasterRenderer(Loader loader)
+	public MasterRenderer(Loader loader, float timeDelay)
 	{
 		enableCulling();
 		createProjectionMatrix();
 		renderer = new EntityRenderer(shader, projectionMatrix);
 		terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
-		skyboxRenderer = new SkyboxRenderer(loader, projectionMatrix);
+		skyboxRenderer = new SkyboxRenderer(loader, projectionMatrix, timeDelay);
 		guiRenderer = new GuiRenderer(loader);
 
 		GuiTexture gui = new GuiTexture(loader.loadTexture("socuwan"), new Vector2f(0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
@@ -61,7 +61,6 @@ public class MasterRenderer {
 		guis.add(gui);
 		guis.add(gui2);
 		guis.add(gui3);
-
 	}
 	
 	public Matrix4f getProjectionMatrix(){

@@ -66,11 +66,12 @@ public class SkyboxRenderer {
 	private int nightTextureID;
 	private SkyboxShader shader;
 	private float time = 0;
-	
-	public SkyboxRenderer(Loader loader, Matrix4f projectionMatrix){
+	float delay = 0;	
+	public SkyboxRenderer(Loader loader, Matrix4f projectionMatrix, float delayTime){
 		cube = loader.loadToVAO(VERTICES, 3);
 		dayTextureID = loader.loadCubeMap(TEXTURE_FILES);
 		nightTextureID = loader.loadCubeMap(NIGHT_TEXTURE_FILES);
+		delay = delayTime;
 		shader = new SkyboxShader();
 		shader.start();
 		shader.connectTextureUnits();
@@ -97,10 +98,9 @@ public class SkyboxRenderer {
 		int texture1;
 		int texture2;
 		float blendFactor;		
-		float delay = 100;
-		
-			texture1 = nightTextureID;
-			texture2 = dayTextureID;
+
+		texture1 = nightTextureID;
+		texture2 = dayTextureID;
 
 		blendFactor = (float) ((float) (Math.sin(Math.toRadians(time/delay))+1.0)/2.0);
 		
