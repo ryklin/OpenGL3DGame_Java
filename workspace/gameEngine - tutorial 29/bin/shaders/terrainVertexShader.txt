@@ -10,8 +10,8 @@ out vec3 toLightVector[4];
 out vec3 toCameraVector;
 out float visibility;
 
-uniform mat4 transformationMatrix;	// the entity's position relative to the everything below
-uniform mat4 projectionMatrix;		// where the default location of everything is
+uniform mat4 transformationMatrix;	// the entity's position relative to the world [-1 1 1 -1]
+uniform mat4 projectionMatrix;		// transform's everything into a viewing frustum (farther away in -z the smaller everything gets foreshortening)
 uniform mat4 viewMatrix;			// camera's perspective
 uniform vec3 lightPosition[4];			// location of the light source (only one source of light so far)
 

@@ -82,10 +82,6 @@ public class StaticShader extends ShaderProgram{
 		super.loadFloat(location_reflectivity, reflectivity);
 	}
 	
-	public void loadTransformationMatrix(Matrix4f matrix){
-		super.loadMatrix(location_transformationMatrix, matrix);
-	}
-
 	public void loadLights(List<Light> lights){
 		
 		for (int i = 0; i < MAX_LIGHTS; i++){
@@ -100,6 +96,11 @@ public class StaticShader extends ShaderProgram{
 			}
 		}
 	}
+	
+	public void loadTransformationMatrix(Matrix4f matrix){
+		super.loadMatrix(location_transformationMatrix, matrix);
+	}
+	
 	public void loadViewMatrix(Camera camera) {
 		Matrix4f viewMatrix = Maths.createViewMatrix(camera);
 		super.loadMatrix(location_viewMatrix, viewMatrix);

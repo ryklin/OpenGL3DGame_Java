@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
@@ -20,11 +19,10 @@ import shaders.StaticShader;
 import shaders.TerrainShader;
 import skybox.SkyboxRenderer;
 import terrains.Terrain;
+import toolbox.Maths;
 
 public class MasterRenderer {
-	private static final float FOV = 70; // field of view angle
-	private static final float NEAR_PLANE = 0.1f;
-	private static final float FAR_PLANE = 1000;
+
 	
 	private static final float RED = 0.5444f;
 	private static final float GREEN = 0.62f;
@@ -49,7 +47,7 @@ public class MasterRenderer {
 	public MasterRenderer(Loader loader, float timeDelay)
 	{
 		enableCulling();
-		createProjectionMatrix();
+		projectionMatrix = Maths.createProjectionMatrix();
 		renderer = new EntityRenderer(shader, projectionMatrix);
 		terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
 		skyboxRenderer = new SkyboxRenderer(loader, projectionMatrix, timeDelay);
@@ -93,7 +91,7 @@ public class MasterRenderer {
 		terrainRenderer.render(terrains);
 		terrainShader.stop();
 		skyboxRenderer.render(camera, RED, GREEN, BLUE);
-		guiRenderer.render(guis);
+		//guiRenderer.render(guis);
 		terrains.clear();
 		entities.clear();
 	}
@@ -128,19 +126,5 @@ public class MasterRenderer {
 	//	GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 	}
 	
-	private void createProjectionMatrix()
-	{
-		float aspectRatio = (float) Display.getWidth()/(float) Display.getHeight();
-		float y_scale = (float) ((1f / Math.tan(Math.toRadians(FOV /2f))) * aspectRatio);
-		float x_scale = y_scale / aspectRatio;
-		float frustum_length = FAR_PLANE - NEAR_PLANE;
-		
-		projectionMatrix = new Matrix4f();
-		projectionMatrix.m00 = x_scale;
-		projectionMatrix.m11 = y_scale;
- 		projectionMatrix.m22 = -((FAR_PLANE + NEAR_PLANE) / frustum_length);
-		projectionMatrix.m23 = -1;
-		projectionMatrix.m32 = -((2 * NEAR_PLANE * FAR_PLANE) / frustum_length);
-		projectionMatrix.m33 = 0;
-	}
+
 }
