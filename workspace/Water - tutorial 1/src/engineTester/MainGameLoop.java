@@ -41,6 +41,13 @@ public class MainGameLoop {
 		TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
 		TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("blendMap"));
 		Terrain terrain = new Terrain(0,-1,loader, texturePack, blendMap, "heightMap");
+
+		List <Terrain> terrains = new ArrayList<Terrain>();
+		terrains.add(terrain);
+	
+		//Terrain underground = new Terrain(0,-1,loader, texturePack, blendMap, "heightMap4");
+		//terrains.add(underground);
+
 		// *****************************************
 		
 		TexturedModel tree = new TexturedModel(OBJLoader.loadObjModel("pine", loader), new ModelTexture(loader.loadTexture("pine")));
@@ -82,16 +89,15 @@ public class MainGameLoop {
 		}
 		
 		GuiRenderer guiRenderer = new GuiRenderer(loader);
-		List<GuiTexture> guis = new ArrayList<GuiTexture>();
+		List<GuiTexture> mainGUI = new ArrayList<GuiTexture>();
 		GuiTexture gui1 = new GuiTexture(loader.loadTexture("socuwan"), new Vector2f(0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
 		GuiTexture gui2 = new GuiTexture(loader.loadTexture("thinmatrix"), new Vector2f(0.30f, 0.58f), new Vector2f(0.4f, 0.4f));
 		GuiTexture gui3 = new GuiTexture(loader.loadTexture("health"), new Vector2f(-0.74f, 0.925f), new Vector2f(0.25f, 0.25f));
-		guis.add(gui1);
-		guis.add(gui2);
-		guis.add(gui3);
+		mainGUI.add(gui1);
+		mainGUI.add(gui2);
+		mainGUI.add(gui3);
 	
 		Light sun = new Light(new Vector3f(400,1000,-400), new Vector3f(1.0f,1.0f,1.0f));
-		
 		lights.add(sun); // main sun light
 
 		TexturedModel avatar = new TexturedModel(OBJLoader.loadObjModel("player",  loader), new ModelTexture(loader.loadTexture("playerTexture")));
@@ -106,8 +112,8 @@ public class MainGameLoop {
 			player.move(terrain);
 
 
-			renderer.renderScene(entities, terrain, lights, camera, player);
-			guiRenderer.render(guis);
+			renderer.renderScene(entities, terrains, lights, camera, player);
+			guiRenderer.render(mainGUI);
 			DisplayManager.updateDisplay();
 		}
 		guiRenderer.cleanUp();
