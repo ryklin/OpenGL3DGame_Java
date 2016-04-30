@@ -58,8 +58,6 @@ public class Player extends Entity {
 			upwardsSpeed = 0;
 			getPosition().z = -800;
 		}
-		//System.out.println("x:" + getPosition().x + ",y:" + getPosition().y + ",z:" + getPosition().z);  
-		
 	}
 	
 	private void jump()
@@ -90,6 +88,5 @@ public class Player extends Entity {
 		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
 			jump();
 		}
-		
 	}
 }
