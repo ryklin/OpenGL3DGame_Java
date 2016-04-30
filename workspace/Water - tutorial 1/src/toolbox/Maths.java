@@ -10,7 +10,7 @@ public class Maths {
 	
 	private static final float FOV = 90; // field of view angle
 	private static final float NEAR_PLANE = 0.1f;
-	private static final float FAR_PLANE = 1500;
+	private static final float FAR_PLANE = 1700;
 	
 	public static Matrix4f createTransformationMatrix(Vector2f translation, Vector2f scale) {
 		Matrix4f matrix = new Matrix4f();
