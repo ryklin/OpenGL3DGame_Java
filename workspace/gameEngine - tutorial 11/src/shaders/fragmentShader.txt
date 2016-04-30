@@ -15,7 +15,8 @@ void main(void){
 	vec3 unitLightVector = normalize(toLightVector);
 	
 	float nDot1 = dot(unitNormal, unitLightVector);
-	float brightness = max(nDot1, 0.0);
+	float brightness = max(nDot1, 0.0);  // the only reason to do this step is because sometimes the dot product returns values less than 0 (if vectors are facing away from each other). Since we don't care about values less than 0, we take this step.
+	
 	vec3 diffuse = brightness*lightColour;
 	out_Color = vec4(diffuse, 1.0) * texture(modelTexture,pass_textureCoordinates);
 }
