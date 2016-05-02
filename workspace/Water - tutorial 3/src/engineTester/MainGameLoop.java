@@ -73,18 +73,18 @@ public class MainGameLoop {
 
 		Random random = new Random();
 
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 20; i++) {
 			if (i % 7 == 0) {
-				x = random.nextFloat() * 800;
-				z = random.nextFloat() * -800;
+				x = random.nextFloat() * 750;
+				z = random.nextFloat() * -750;
 				y = terrain.getHeightOfTerrain(x, z);
 
 				entities.add(new Entity(fern, random.nextInt(4), new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0, 4.5f));
 			}
 
 			if (i % 3 == 0) {
-				x = random.nextFloat() * 800;
-				z = random.nextFloat() * -800;
+				x = random.nextFloat() * 750;
+				z = random.nextFloat() * -750;
 				y = terrain.getHeightOfTerrain(x, z);
 				
 				entities.add(new Entity(tree, new Vector3f(x, y, z), 0, 0, 0, random.nextFloat() + 5));
@@ -128,7 +128,7 @@ public class MainGameLoop {
 		
 
 		WaterFrameBuffers fbos = new WaterFrameBuffers();
-		GuiTexture refraction = new GuiTexture(fbos.getRefractionDepthTexture(), new Vector2f(0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
+		GuiTexture refraction = new GuiTexture(fbos.getRefractionTexture(), new Vector2f(0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
 		GuiTexture reflection = new GuiTexture(fbos.getReflectionTexture(), new Vector2f(-0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
 		guiMap.add(refraction);
 		guiMap.add(reflection);
