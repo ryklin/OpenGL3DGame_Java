@@ -137,17 +137,26 @@ public class MainGameLoop {
 			camera.move();
 			player.move(terrain);
 			
+			// just clip the FBO's
 			GL11.glEnable(GL30.GL_CLIP_DISTANCE0);
 			
 			fbos.bindReflectionFrameBuffer();
+			float distance = 2 * (camera.getPosition().y - water.getHeight());
+			camera.getPosition().y -= distance;
+			camera.invertPitch(); // if you're using camera roll as well you'll need to invert Z
+			
 			renderer.renderScene(entities, terrains, lights, camera, player, new Vector4f(0, 1, 0, -water.getHeight()));
-
+			// return the camera back to its original position after rendering the scene
+			camera.getPosition().y += distance;
+			camera.invertPitch();
+			
 			fbos.bindRefractionFrameBuffer();
 			renderer.renderScene(entities, terrains, lights, camera, player, new Vector4f(0, -1, 0, water.getHeight()));
 
 			GL11.glDisable(GL30.GL_CLIP_DISTANCE0);
 			fbos.unbindCurrentFrameBuffer();
 
+			// render the entire scene without clipping
 			renderer.renderScene(entities, terrains, lights, camera, player, new Vector4f(0, 1, 0, 100000)); //<-- hack to make sure nothing ever gets clipped
 			waterRenderer.render(waters, camera);
 			//guiRenderer.render(mainGUI);
