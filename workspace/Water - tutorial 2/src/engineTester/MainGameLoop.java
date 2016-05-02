@@ -36,10 +36,10 @@ public class MainGameLoop {
 		Loader loader = new Loader();
 		
 		// *********TERRAIN TEXTURE STUFF***********
-		TerrainTexture backgroundTexture = new TerrainTexture(loader.loadTexture("grassy"));
-		TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("dirt"));
-		TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("pinkFlowers"));
-		TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("mossPath256"));
+		TerrainTexture backgroundTexture = new TerrainTexture(loader.loadTexture("grassy2"));
+		TerrainTexture rTexture = new TerrainTexture(loader.loadTexture("mud"));
+		TerrainTexture gTexture = new TerrainTexture(loader.loadTexture("mud"));
+		TerrainTexture bTexture = new TerrainTexture(loader.loadTexture("mud"));
 
 		TerrainTexturePack texturePack = new TerrainTexturePack(backgroundTexture, rTexture, gTexture, bTexture);
 		TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("blendMap"));
@@ -48,9 +48,6 @@ public class MainGameLoop {
 		List <Terrain> terrains = new ArrayList<Terrain>();
 		terrains.add(terrain);
 	
-		//Terrain underground = new Terrain(0,-1,loader, texturePack, blendMap, "heightMap4");
-		//terrains.add(underground);
-
 		// *****************************************
 		
 		TexturedModel tree = new TexturedModel(OBJLoader.loadObjModel("pine", loader), new ModelTexture(loader.loadTexture("pine")));
@@ -76,20 +73,25 @@ public class MainGameLoop {
 		for (int i = 0; i < 100; i++) {
 			if (i % 7 == 0) {
 				x = random.nextFloat() * 800;
-				z = random.nextFloat() * -600;
+				z = random.nextFloat() * -800;
 				y = terrain.getHeightOfTerrain(x, z);
 
-				entities.add(new Entity(fern, random.nextInt(4), new Vector3f(x-20, y, z), 0, random.nextFloat() * 360, 0, 1.5f));
+				entities.add(new Entity(fern, random.nextInt(4), new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0, 4.5f));
 			}
 
 			if (i % 3 == 0) {
 				x = random.nextFloat() * 800;
-				z = random.nextFloat() * -600;
+				z = random.nextFloat() * -800;
 				y = terrain.getHeightOfTerrain(x, z);
 				
-				entities.add(new Entity(tree, new Vector3f(x, y, z), 0, 0, 0, random.nextFloat() * 1 + 1));
+				entities.add(new Entity(tree, new Vector3f(x, y, z), 0, 0, 0, random.nextFloat() + 5));
 			}
 		}
+		TexturedModel rock = new TexturedModel(OBJLoader.loadObjModel("rocks", loader), new ModelTexture(loader.loadTexture("rocks")));
+		entities.add(new Entity(rock, 0, new Vector3f(400, 5,-400), 0, 0, 0, 400f));
+		rock.getTexture().setReflectivity(0);
+		rock.getTexture().setHasTransparency(true);
+		rock.getTexture().setUseFakeLighting(false);
 		
 		GuiRenderer guiRenderer = new GuiRenderer(loader);
 		
@@ -103,8 +105,10 @@ public class MainGameLoop {
 		mainGUI.add(gui2);
 		mainGUI.add(gui3);
 
-		Light sun = new Light(new Vector3f(400,1000,-400), new Vector3f(1.0f,1.0f,1.0f));
+		Light sun = new Light(new Vector3f(1000,1000,1000), new Vector3f(1.0f,1.0f,1.0f));
 		lights.add(sun); // main sun light
+		Light sunBottom = new Light(new Vector3f(400,-2000,-400), new Vector3f(1.0f,1.0f,1.0f));
+		lights.add(sunBottom); // main sun light
 
 		TexturedModel avatar = new TexturedModel(OBJLoader.loadObjModel("player",  loader), new ModelTexture(loader.loadTexture("playerTexture")));
 		
@@ -116,11 +120,11 @@ public class MainGameLoop {
 		WaterShader waterShader = new WaterShader();
 		WaterRenderer waterRenderer = new WaterRenderer(loader, waterShader, renderer.getProjectionMatrix()); 
 		List<WaterTile> waters = new ArrayList<WaterTile>();
-		waters.add(new WaterTile(550, -550, 0));
+		waters.add(new WaterTile(400, -400, 0));
 		
 
 		WaterFrameBuffers fbos = new WaterFrameBuffers();
-		GuiTexture gui = new GuiTexture(fbos.getReflectionTexture(), new Vector2f(-0.5f, 0.5f), new Vector2f(0.3f, 0.3f));
+		GuiTexture gui = new GuiTexture(fbos.getReflectionTexture(), new Vector2f(-0.7f, 0.7f), new Vector2f(0.25f, 0.25f));
 		guiMap.add(gui);
 		
 		while(!Display.isCloseRequested()) {
@@ -134,7 +138,7 @@ public class MainGameLoop {
 
 			renderer.renderScene(entities, terrains, lights, camera, player);
 			waterRenderer.render(waters, camera);
-			guiRenderer.render(mainGUI);
+			//guiRenderer.render(mainGUI);
 			guiRenderer.render(guiMap);
 			DisplayManager.updateDisplay();
 		}
