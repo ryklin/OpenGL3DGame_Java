@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 
 import entities.Camera;
 import entities.Light;
@@ -78,7 +79,7 @@ public class TerrainShader extends ShaderProgram {
 	}
 	
 	public void loadSkyColour(float r, float g, float b){
-		super.loadVector(location_skyColour, new Vector3f(r,g,b));
+		super.load3DVector(location_skyColour, new Vector3f(r,g,b));
 	}
 	
 	public void loadShineVariables(float damper, float reflectivity)
@@ -94,13 +95,13 @@ public class TerrainShader extends ShaderProgram {
 	public void loadLights(List<Light> lights){
 		for (int i = 0; i < MAX_LIGHTS; i++){
 			if (i < lights.size()) {
-				super.loadVector(location_lightPosition[i], lights.get(i).getPosition());
-				super.loadVector(location_lightColour[i], lights.get(i).getColour());
-				super.loadVector(location_lightAttenuation[i], lights.get(i).getAttenuation());
+				super.load3DVector(location_lightPosition[i], lights.get(i).getPosition());
+				super.load3DVector(location_lightColour[i], lights.get(i).getColour());
+				super.load3DVector(location_lightAttenuation[i], lights.get(i).getAttenuation());
 			} else {
-				super.loadVector(location_lightPosition[i], new Vector3f(0, 0, 0));
-				super.loadVector(location_lightColour[i], new Vector3f(0, 0, 0));
-				super.loadVector(location_lightAttenuation[i], new Vector3f(1, 0, 0)); // default is 1 so that it does not divide by zero in the shader!
+				super.load3DVector(location_lightPosition[i], new Vector3f(0, 0, 0));
+				super.load3DVector(location_lightColour[i], new Vector3f(0, 0, 0));
+				super.load3DVector(location_lightAttenuation[i], new Vector3f(1, 0, 0)); // default is 1 so that it does not divide by zero in the shader!
 			}
 		}
 	}

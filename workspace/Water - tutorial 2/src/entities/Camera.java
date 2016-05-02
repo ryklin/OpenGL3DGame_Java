@@ -53,8 +53,8 @@ public class Camera {
 		position.z = player.getPosition().z - offsetZ;
 		position.y = player.getPosition().y + verticalDistance+10;
 
-		System.out.println("player position : (" + player.getPosition().x + "," + player.getPosition().y + "," + player.getPosition().z + ") camera distance :" + distanceFromPlayer +  " camera angle : " + angleAroundPlayer + " camera pitch : " + pitch);
-}
+		//System.out.println("player position : (" + player.getPosition().x + "," + player.getPosition().y + "," + player.getPosition().z + ") camera distance :" + distanceFromPlayer +  " camera angle : " + angleAroundPlayer + " camera pitch : " + pitch);
+	}
 	
 	private float calculateHorizontalDistance(){
 		return (float) (distanceFromPlayer * Math.cos(Math.toRadians(pitch)));
