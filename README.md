@@ -1,5 +1,5 @@
 # Game Engine written entirely using Java, OpenGL, and GLSL.
-<b>This code is based entirely on ThinMatrix's Beginners OpenGL 3D Game Tutorials</b>
+<b>This code is based entirely on ThinMatrix's Beginners OpenGL 3D Game Tutorials but also includes the water tutorials and some of my own additions.</b>
 This tutorial focuses on the new Opengl 3.0 programmable pipeline, with emphasis on shaders!
 
 To view the tutorial video series, visit the following link.
@@ -17,9 +17,10 @@ files but you must add them to the Eclipse Project. For details on on how this w
 
 https://www.youtube.com/watch?v=0v56I5UWrYY&list=UUxiBXBY1a-axNVGIvQKGcNA
 
-Since, I have already downloaded all the jar and dll files and placed them into the appropriate directories, 
+To get started, because I have already downloaded all the jar and dll files and placed them into the appropriate directories, 
 you can skip ahead to time point 3:00 minutes and only add the external jar files to your project, along with the 
-"natives folder", as shown.
+"natives folder", as shown. I intentionally chose to keep each tutorial in separate folder in order to make it easier to diff the changes.
+I also included all the relevent resources (height maps, blend maps, obj's and texture png's) in their respective tutorial folders.
 
 Optional:
 
