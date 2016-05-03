@@ -109,7 +109,7 @@ public class MainGameLoop {
 		mainGUI.add(gui2);
 		mainGUI.add(gui3);
 
-		Light sun = new Light(new Vector3f(400,500,-400), new Vector3f(1.0f,1.0f,1.0f));
+		Light sun = new Light(new Vector3f(0,500,-400), new Vector3f(1.0f,1.0f,1.0f));
 		lights.add(sun); // main sun light
 		Light sunBottom = new Light(new Vector3f(400,-2000,-400), new Vector3f(1.0f,1.0f,1.0f));
 		lights.add(sunBottom); // main sun light
@@ -153,7 +153,7 @@ public class MainGameLoop {
 
 			// render the entire scene without clipping
 			renderer.renderScene(entities, terrains, lights, camera, player, new Vector4f(0, 1, 0, 100000)); //<-- hack to make sure nothing ever gets clipped
-			waterRenderer.render(waters, camera);
+			waterRenderer.render(waters, camera, sun);
 			//guiRenderer.render(mainGUI);
 			guiRenderer.render(guiMap);
 			DisplayManager.updateDisplay();
